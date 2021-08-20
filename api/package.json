@@ -11,10 +11,15 @@
     },
     "author": "Squidbody",
     "license": "ISC",
+    "_moduleAliases": {
+        "@controllers": "src/controllers",
+        "@routes": "src/routes"
+    },
     "dependencies": {
         "@prisma/client": "^2.29.1",
         "dotenv": "^10.0.0",
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "module-alias": "^2.2.2"
     },
     "devDependencies": {
         "@types/express": "^4.17.13",
