@@ -3,9 +3,9 @@ import { Router } from 'express'
 
 const AuthRouter = Router()
 
-AuthRouter.get('/login', AuthController.login)
+AuthRouter.post('/login', AuthController.login)
 AuthRouter.get('/register', AuthController.register)
 AuthRouter.get('/logout', AuthController.logout)
-AuthRouter.get('/refreshToken', AuthController.refreshToken)
+AuthRouter.post('/refreshToken', AuthController.refreshToken)
 
 export default AuthRouter
