@@ -9,8 +9,8 @@ export const authHandler = async (req: Request, _res: Response, next: NextFuncti
 
         req.user = user
 
-        next()
+        return next()
     } catch {
-        next(new error.Forbidden('auth middleware'))
+        return next(new error.Forbidden('auth middleware'))
     }
 }
