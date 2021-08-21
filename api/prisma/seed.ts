@@ -1,9 +1,11 @@
 import { PrismaClient } from '@prisma/client'
+import * as bcrypt from 'bcrypt'
 import * as faker from 'faker'
 
 const prisma = new PrismaClient()
 
 const emailsToKeep = ['alexmcc.dev@gmail.com', 'jmbrunner92@gmail.com']
+const testPassword = 'test'
 
 const numberOfUsers = 100
 
@@ -30,6 +32,7 @@ async function main() {
             update: {},
             create: {
                 email: email,
+                password: await bcrypt.hash(testPassword, 10),
             },
         })
     })
@@ -42,6 +45,7 @@ async function main() {
             update: {},
             create: {
                 email: faker.internet.email(),
+                password: await bcrypt.hash(testPassword, 10),
             },
         })
     }
