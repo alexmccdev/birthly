@@ -1,4 +1,4 @@
-require('module-alias/register')
+require('module-alias/register') // enables @middleware, @routes, etc. notation for imports
 
 import { authHandler } from '@middleware/auth.middleware'
 import { errorHandler } from '@middleware/error.middleware'

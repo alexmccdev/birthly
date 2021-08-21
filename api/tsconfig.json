@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "typeRoots": ["types", "node_modules/@types"],
+        "typeRoots": ["src/types", "node_modules/@types"],
         // Should match _moduleAliases in package.json
         "paths": {
             "@controllers/*": ["src/controllers/*"],

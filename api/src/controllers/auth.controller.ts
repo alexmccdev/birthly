@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { cache } from '@utils/cache.utils'
 import { error } from '@utils/error.utils'
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '@utils/jwt.utils'
 import { NextFunction, Request, Response } from 'express'
@@ -17,8 +18,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const accessToken = generateAccessToken(tokenData)
         const refreshToken = generateRefreshToken(tokenData)
 
-        // cache.set(user.id, refreshToken)
-
         res.json({ accessToken, refreshToken })
     } catch {
         next(new error.Unauthorized('/login'))
@@ -29,22 +28,32 @@ export const register = async (_req: Request, res: Response, _next: NextFunction
     res.json('register')
 }
 
-export const logout = async (_req: Request, res: Response, _next: NextFunction) => {
-    res.json('logout')
-}
-
-export const refreshToken = async (req: Request, res: Response, next: NextFunction) => {
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { refreshToken } = req.body
-
         const { id } = verifyRefreshToken(refreshToken)
 
-        const newAccessToken = generateAccessToken({ id })
-        const newRefreshToken = generateRefreshToken({ id })
+        cache.del(id)
 
-        // cache.set(id, newRefreshToken)
+        res.sendStatus(204)
+    } catch {
+        next(new error.Unauthorized('/logout'))
+    }
+}
 
-        res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken })
+export const token = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { refreshToken } = req.body
+        const { id } = verifyRefreshToken(refreshToken)
+
+        // Check cache for current refresh token for user
+        const currentRefreshToken = cache.get(id)
+
+        if (!currentRefreshToken || currentRefreshToken !== refreshToken) {
+            next(new error.Unauthorized('/refresh-token'))
+        }
+
+        res.json({ accessToken: generateAccessToken({ id }) })
     } catch {
         next(new error.Unauthorized('/refresh-token'))
     }

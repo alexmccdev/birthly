@@ -2,14 +2,13 @@ import { PrismaClient } from '@prisma/client'
 import * as faker from 'faker'
 
 const prisma = new PrismaClient()
-const environment = process.env.NODE_ENV
 
 const emailsToKeep = ['alexmcc.dev@gmail.com', 'jmbrunner92@gmail.com']
 
 const numberOfUsers = 100
 
 async function main() {
-    if (environment !== 'development') {
+    if (process.env.NODE_ENV !== 'development') {
         return
     }
 

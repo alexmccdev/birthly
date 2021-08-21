@@ -1,19 +1,22 @@
+import { cache } from '@utils/cache.utils'
 import { Request } from 'express'
 import * as jwt from 'jsonwebtoken'
 
-const ACCESS_TOKEN_AGE = 60 // 60 seconds
-const REFRESH_TOKEN_AGE = 3 * 24 * 60 * 60 // 3 days
-
 export const generateAccessToken = (tokenData: TokenData): string => {
     return jwt.sign(tokenData, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: ACCESS_TOKEN_AGE,
+        expiresIn: process.env.ACCESS_TOKEN_AGE | 0,
     })
 }
 
 export const generateRefreshToken = (tokenData: TokenData): string => {
-    return jwt.sign(tokenData, process.env.REFRESH_TOKEN_SECRET, {
-        expiresIn: REFRESH_TOKEN_AGE,
+    const refreshToken = jwt.sign(tokenData, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: process.env.REFRESH_TOKEN_AGE | 0,
     })
+
+    // Save refresh token in cache
+    cache.set(tokenData.id, refreshToken)
+
+    return refreshToken
 }
 
 export const verifyAccessToken = (accessToken: string): TokenData => {
