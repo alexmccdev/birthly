@@ -3,7 +3,9 @@ import { Router } from 'express'
 
 const BirthRouter = Router()
 
-BirthRouter.get('/', BirthController.births)
-BirthRouter.get('/:id', BirthController.birth)
+BirthRouter.get('/', BirthController.getBirths)
+BirthRouter.get('/:id', BirthController.getBirth)
+BirthRouter.post('/:id', BirthController.updateBirth)
+BirthRouter.delete('/:id', BirthController.deleteBirth)
 
 export default BirthRouter
