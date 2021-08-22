@@ -14,9 +14,6 @@ const setupMiddleware = (app: express.Express) => {
 const setupRoutes = (app: express.Express) => {
     app.use('/auth', AuthRouter)
     app.use('/births', authHandler, BirthRouter)
-
-    // Sample routes
-    app.get('/protected', authHandler, (_req, res) => res.send(`🔓 Valid access token!`))
     app.get('/', (_req, res) => res.send(`Hello from ${process.env.SITE_NAME}! 👶`))
 }
 
@@ -31,7 +28,7 @@ const startServer = async () => {
     setupRoutes(app)
     setupErrorHandling(app)
 
-    app.listen(process.env.PORT, () => console.log(`Server ready at: http://localhost:${process.env.PORT}`))
+    app.listen(process.env.PORT, () => console.log(`Server ready at: http://${process.env.IP}:${process.env.PORT}`))
 }
 
 startServer()

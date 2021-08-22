@@ -11,6 +11,6 @@ export const authHandler = async (req: Request, _res: Response, next: NextFuncti
 
         return next()
     } catch {
-        return next(new error.Forbidden('auth middleware'))
+        return next(new error.Forbidden())
     }
 }
