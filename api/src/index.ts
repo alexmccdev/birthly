@@ -4,11 +4,13 @@ import { authHandler } from '@middleware/auth.middleware'
 import { errorHandler } from '@middleware/error.middleware'
 import AuthRouter from '@routes/auth.routes'
 import BirthRouter from '@routes/birth.routes'
+import * as cors from 'cors'
 import * as express from 'express'
 
 const setupMiddleware = (app: express.Express) => {
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
+    app.use(cors())
 }
 
 const setupRoutes = (app: express.Express) => {

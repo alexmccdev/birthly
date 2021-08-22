@@ -6,6 +6,7 @@ declare namespace NodeJS {
             PORT: number
             IP: string
             DATABASE_URL: string
+            CLIENT_URL: string
             REFRESH_TOKEN_SECRET: string
             REFRESH_TOKEN_AGE: number
             ACCESS_TOKEN_SECRET: string
