@@ -24,6 +24,19 @@ export const getBirth = async (req: Request, res: Response, next: NextFunction) 
     }
 }
 
+export const createBirth = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const createData: Prisma.BirthUncheckedCreateInput = { ...req.body, userId: req.user.id }
+
+        const birth = await prisma.birth.create({
+            data: createData,
+        })
+        return res.json(birth)
+    } catch {
+        return next(new error.NotFound('/births/:id'))
+    }
+}
+
 export const updateBirth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const updateData: Prisma.BirthUncheckedCreateInput = req.body
