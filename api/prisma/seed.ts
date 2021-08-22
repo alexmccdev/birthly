@@ -4,48 +4,79 @@ import * as faker from 'faker'
 
 const prisma = new PrismaClient()
 
-const emailsToKeep = ['alexmcc.dev@gmail.com', 'jmbrunner92@gmail.com']
-const testPassword = 'test'
+const EMAILS_TO_KEEP = ['alexmcc.dev@gmail.com', 'jmbrunner92@gmail.com']
+const TEST_PASSWORD = 'test'
+const HASH_ROUNDS = 10
 
-const numberOfUsers = 100
+const NUM_TEST_USERS = 100
+const MAX_BIRTHS_PER_USER = 20
+
+const deleteAllData = async () => {
+    await prisma.birth.deleteMany()
+    await prisma.user.deleteMany()
+}
+
+const getRandomListOfBirths = (numberOfBirths: number) => {
+    let births = []
+
+    for (let i = 0; i < numberOfBirths; i++) {
+        const dateTime = faker.date.past()
+        births.push({
+            date: dateTime,
+            time: dateTime,
+        })
+    }
+
+    return births
+}
 
 async function main() {
     if (process.env.NODE_ENV !== 'development') {
         return
     }
 
-    // Delete all data
-    await prisma.user.deleteMany({
-        where: {
-            NOT: emailsToKeep.map((email) => {
-                return {
-                    email,
-                }
-            }),
-        },
-    })
+    await deleteAllData()
 
-    // Create all data
-    emailsToKeep.forEach(async (email) => {
+    // Create data for emails to keep
+    EMAILS_TO_KEEP.forEach(async (email) => {
+        const births = getRandomListOfBirths(20)
+
         await prisma.user.upsert({
             where: { email },
-            update: {},
+            update: {
+                births: {
+                    create: births,
+                },
+            },
             create: {
                 email: email,
-                password: await bcrypt.hash(testPassword, 10),
+                password: await bcrypt.hash(TEST_PASSWORD, HASH_ROUNDS),
+                births: {
+                    create: births,
+                },
             },
         })
     })
 
-    for (let i = 0; i < numberOfUsers; i++) {
+    // Create data for random users
+    for (let i = 0; i < NUM_TEST_USERS; i++) {
         const email = faker.internet.email()
+
+        let births = getRandomListOfBirths(faker.datatype.number(MAX_BIRTHS_PER_USER))
 
         await prisma.user.upsert({
             where: { email },
-            update: {},
+            update: {
+                births: {
+                    create: births,
+                },
+            },
             create: {
                 email: faker.internet.email(),
-                password: await bcrypt.hash(testPassword, 10),
+                password: await bcrypt.hash(TEST_PASSWORD, HASH_ROUNDS),
+                births: {
+                    create: births,
+                },
             },
         })
     }

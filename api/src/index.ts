@@ -3,6 +3,7 @@ require('module-alias/register') // enables @middleware, @routes, etc. notation 
 import { authHandler } from '@middleware/auth.middleware'
 import { errorHandler } from '@middleware/error.middleware'
 import AuthRouter from '@routes/auth.routes'
+import BirthRouter from '@routes/birth.routes'
 import * as express from 'express'
 
 const setupMiddleware = (app: express.Express) => {
@@ -12,6 +13,7 @@ const setupMiddleware = (app: express.Express) => {
 
 const setupRoutes = (app: express.Express) => {
     app.use('/auth', AuthRouter)
+    app.use('/births', authHandler, BirthRouter)
 
     // Sample routes
     app.get('/protected', authHandler, (_req, res) => res.send(`🔓 Valid access token!`))
