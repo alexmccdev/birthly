@@ -4,6 +4,7 @@ import { authHandler } from '@middleware/auth.middleware'
 import { errorHandler } from '@middleware/error.middleware'
 import AuthRouter from '@routes/auth.routes'
 import BirthRouter from '@routes/birth.routes'
+import UserRouter from '@routes/user.routes'
 import * as cors from 'cors'
 import * as express from 'express'
 
@@ -16,6 +17,7 @@ const setupMiddleware = (app: express.Express) => {
 const setupRoutes = (app: express.Express) => {
     app.use('/auth', AuthRouter)
     app.use('/births', authHandler, BirthRouter)
+    app.use('/users', authHandler, UserRouter)
     app.get('/', (_req, res) => res.send(`Hello from ${process.env.SITE_NAME}! 👶`))
 }
 

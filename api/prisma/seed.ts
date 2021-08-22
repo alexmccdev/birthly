@@ -73,6 +73,7 @@ async function main() {
             },
             create: {
                 email: faker.internet.email(),
+                name: `${faker.name.firstName()} ${faker.name.lastName()}`,
                 password: await bcrypt.hash(TEST_PASSWORD, HASH_ROUNDS),
                 births: {
                     create: births,
