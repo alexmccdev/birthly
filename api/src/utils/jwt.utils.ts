@@ -19,12 +19,22 @@ export const generateRefreshToken = (tokenData: TokenData): string => {
     return refreshToken
 }
 
+export const generateEmailToken = (tokenData: TokenData): string => {
+    return jwt.sign(tokenData, process.env.EMAIL_TOKEN_SECRET, {
+        expiresIn: process.env.EMAIL_TOKEN_AGE | 0,
+    })
+}
+
 export const verifyAccessToken = (accessToken: string): TokenData => {
     return jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET) as TokenData
 }
 
 export const verifyRefreshToken = (refreshToken: string): TokenData => {
     return jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET) as TokenData
+}
+
+export const verifyEmailToken = (emailToken: string): TokenData => {
+    return jwt.verify(emailToken, process.env.EMAIL_TOKEN_SECRET) as TokenData
 }
 
 export const getAccessTokenFromRequest = (req: Request) => {

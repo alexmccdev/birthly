@@ -9,6 +9,8 @@ declare namespace NodeJS {
             CLIENT_URL: string
             REFRESH_TOKEN_SECRET: string
             REFRESH_TOKEN_AGE: number
+            EMAIL_TOKEN_SECRET: string
+            EMAIL_TOKEN_AGE: number
             ACCESS_TOKEN_SECRET: string
             ACCESS_TOKEN_AGE: number
         }
