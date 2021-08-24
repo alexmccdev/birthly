@@ -32,7 +32,9 @@ const startServer = async () => {
     setupRoutes(app)
     setupErrorHandling(app)
 
-    app.listen(process.env.PORT, () => console.log(`Server ready at: http://${process.env.IP}:${process.env.PORT}`))
+    app.listen(process.env.SERVER_PORT, () =>
+        console.log(`Server ready at: http://${process.env.SERVER_IP}:${process.env.SERVER_PORT}`)
+    )
 }
 
 startServer()

@@ -48,7 +48,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
         const emailToken = generateEmailToken({ id: newUser.id })
 
-        const verificationLink = `http://${process.env.IP}:${process.env.PORT}/auth/verify/${emailToken}`
+        const verificationLink = `http://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/auth/verify/${emailToken}`
 
         await sendEmail(
             newUser.email,
