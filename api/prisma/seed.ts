@@ -51,6 +51,7 @@ async function main() {
             create: {
                 email: email,
                 password: await bcrypt.hash(TEST_PASSWORD, HASH_ROUNDS),
+                verified: true,
                 births: {
                     create: births,
                 },
@@ -75,6 +76,7 @@ async function main() {
                 email: faker.internet.email(),
                 name: `${faker.name.firstName()} ${faker.name.lastName()}`,
                 password: await bcrypt.hash(TEST_PASSWORD, HASH_ROUNDS),
+                verified: true,
                 births: {
                     create: births,
                 },
