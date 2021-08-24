@@ -3,14 +3,20 @@ declare namespace NodeJS {
         env: {
             NODE_ENV: 'development' | 'test' | 'production'
             SITE_NAME: string
+
+            SERVER_PROTOCOL: 'http' | 'https'
             SERVER_PORT: number
             SERVER_IP: string
+
             DATABASE_URL: string
+
             CLIENT_URL: string
+
             EMAIL_HOST: string
             EMAIL_PORT: number
             EMAIL_USER: string
             EMAIL_PASSWORD: string
+
             REFRESH_TOKEN_SECRET: string
             REFRESH_TOKEN_AGE: number
             EMAIL_TOKEN_SECRET: string

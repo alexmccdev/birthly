@@ -33,7 +33,9 @@ const startServer = async () => {
     setupErrorHandling(app)
 
     app.listen(process.env.SERVER_PORT, () =>
-        console.log(`Server ready at: http://${process.env.SERVER_IP}:${process.env.SERVER_PORT}`)
+        console.log(
+            `Server ready at: ${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}`
+        )
     )
 }
 

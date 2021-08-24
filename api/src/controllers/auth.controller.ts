@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { cache } from '@utils/cache.utils'
-import { sendEmail } from '@utils/email.utils'
+import { sendEmailVericationEmail } from '@utils/email.utils'
 import { error } from '@utils/error.utils'
 import {
     generateAccessToken,
@@ -48,15 +48,11 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
         const emailToken = generateEmailToken({ id: newUser.id })
 
-        const verificationLink = `http://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/auth/verify/${emailToken}`
+        await sendEmailVericationEmail(newUser.email, emailToken)
 
-        await sendEmail(
-            newUser.email,
-            'Verify your Birthly account',
-            verificationLink,
-            `<a href="${verificationLink}" target="_blank">Click here to verify</a>`
-        )
-        return res.sendStatus(200)
+        return res.json({
+            redirect: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/login`,
+        })
     } catch {
         return next(new error.BadRequest('/register'))
     }
