@@ -23,6 +23,7 @@ declare namespace NodeJS {
             EMAIL_TOKEN_AGE: number
             ACCESS_TOKEN_SECRET: string
             ACCESS_TOKEN_AGE: number
+            PASSWORD_RESET_TOKEN_AGE: number
         }
     }
 }

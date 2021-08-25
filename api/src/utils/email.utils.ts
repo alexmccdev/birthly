@@ -28,28 +28,41 @@ const sendEmail = async (
     let transporter = nodemailer.createTransport(transportOptions as SMTPTransport.Options)
 
     // send mail with defined transport object
-    return await transporter.sendMail({
+    const mailInfo = await transporter.sendMail({
         from, // sender address
         to, // list of receivers
         subject,
         text, // plain text body
         html, // html body
     })
-}
-
-export const sendEmailVericationEmail = async (to: string, emailToken: string) => {
-    const verificationLink = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/auth/verify-email?token=${emailToken}`
-    const mailInfo = await sendEmail(
-        to,
-        '"Verify Birthly Account" <noreply@birthly.com>',
-        'Verify your Birthly account',
-        verificationLink,
-        `<a href="${verificationLink}" target="_blank">Click here to verify</a>`
-    )
 
     // log message text in dev
     if (process.env.NODE_ENV === 'development') {
         console.log('Message sent: %s', mailInfo.messageId)
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(mailInfo))
     }
+
+    return mailInfo
+}
+
+export const sendEmailVericationEmail = async (to: string, emailToken: string) => {
+    const verificationLink = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/auth/verify-email?token=${emailToken}`
+    await sendEmail(
+        to,
+        '"Verify Birthly Account" <noreply@birthly.com>',
+        'Verify your Birthly account',
+        verificationLink,
+        `<a href="${verificationLink}" target="_blank">Click here to verify</a>`
+    )
+}
+
+export const sendForgotPasswordEmail = async (to: string, id: string, passwordToken: string) => {
+    const forgotPasswordLink = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/auth/reset-password?id=${id}&token=${passwordToken}`
+    await sendEmail(
+        to,
+        '"Forgotten Password" <noreply@birthly.com>',
+        'Forgot your password?',
+        forgotPasswordLink,
+        `<a href="${forgotPasswordLink}" target="_blank">Click here to reset your password</a>`
+    )
 }

@@ -1,12 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 import { cache } from '@utils/cache.utils'
-import { sendEmailVericationEmail } from '@utils/email.utils'
+import { sendEmailVericationEmail, sendForgotPasswordEmail } from '@utils/email.utils'
 import { error } from '@utils/error.utils'
 import {
     generateAccessToken,
     generateEmailToken,
+    generatePasswordToken,
     generateRefreshToken,
     verifyEmailToken,
+    verifyPasswordToken,
     verifyRefreshToken,
 } from '@utils/jwt.utils'
 import * as bcrypt from 'bcrypt'
@@ -52,6 +54,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
         return res.json({
             redirect: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/login`,
+            flashMessage: 'Your account has been successfully created!',
         })
     } catch {
         return next(new error.BadRequest('/register'))
@@ -99,6 +102,50 @@ export const verifyEmail = async (req: Request, res: Response, next: NextFunctio
 
         return res.sendStatus(200)
     } catch {
-        return next(new error.BadRequest('/verify'))
+        return next(new error.BadRequest('/verify-email'))
     }
+}
+
+export const forgotPassword = async (req: Request, res: Response, _next: NextFunction) => {
+    try {
+        const { email } = req.body
+
+        const user = await prisma.user.findUnique({
+            where: { email },
+        })
+
+        const passwordToken = generatePasswordToken({ id: user.id }, user.password)
+
+        await sendForgotPasswordEmail(user.email, user.id, passwordToken)
+    } catch {
+        // Always return successful for security reasons.
+    }
+
+    return res.json({
+        redirect: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/login`,
+        flashMessage: 'An password reset email has been sent to your inbox.',
+    })
+}
+
+export const resetPassword = async (req: Request, res: Response, _next: NextFunction) => {
+    let flashMessage = 'Password reset successful!'
+
+    try {
+        const { token: passwordToken, id: resetId } = req.query
+
+        const user = await prisma.user.findUnique({ where: { id: resetId as string } })
+
+        const { id } = verifyPasswordToken(passwordToken as string, user.password)
+
+        if (resetId === id && !!req.body.password) {
+            await prisma.user.update({ where: { id }, data: { password: await bcrypt.hash(req.body.password, 10) } })
+        }
+    } catch {
+        flashMessage = 'Password reset failed, please try again.'
+    }
+
+    return res.json({
+        redirect: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/login`,
+        flashMessage,
+    })
 }
