@@ -24,6 +24,9 @@ declare namespace NodeJS {
             ACCESS_TOKEN_SECRET: string
             ACCESS_TOKEN_AGE: number
             PASSWORD_RESET_TOKEN_AGE: number
+
+            RATE_LIMIT_WINDOW_LENGTH: number
+            RATE_LIMIT_MAX: number
         }
     }
 }
