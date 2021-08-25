@@ -53,7 +53,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
         await sendEmailVericationEmail(newUser.email, emailToken)
 
         return res.json({
-            redirect: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/login`,
+            redirect: `/login`,
             flashMessage: 'Your account has been successfully created!',
         })
     } catch {
@@ -122,7 +122,7 @@ export const forgotPassword = async (req: Request, res: Response, _next: NextFun
     }
 
     return res.json({
-        redirect: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/login`,
+        redirect: `/login`,
         flashMessage: 'An password reset email has been sent to your inbox.',
     })
 }
@@ -145,7 +145,7 @@ export const resetPassword = async (req: Request, res: Response, _next: NextFunc
     }
 
     return res.json({
-        redirect: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/login`,
+        redirect: `/login`,
         flashMessage,
     })
 }

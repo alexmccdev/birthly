@@ -1,4 +1,4 @@
-import * as AuthController from '@controllers/auth.controller'
+import * as AuthController from '@controllers/v1/auth.controller'
 import { Router } from 'express'
 
 const AuthRouter = Router()

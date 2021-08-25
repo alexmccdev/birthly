@@ -2,9 +2,9 @@ require('module-alias/register') // enables @middleware, @routes, etc. notation 
 
 import { authHandler } from '@middleware/auth.middleware'
 import { errorHandler } from '@middleware/error.middleware'
-import AuthRouter from '@routes/auth.routes'
-import BirthRouter from '@routes/birth.routes'
-import UserRouter from '@routes/user.routes'
+import AuthRouter from '@routes/v1/auth.routes'
+import BirthRouter from '@routes/v1/birth.routes'
+import UserRouter from '@routes/v1/user.routes'
 import * as cors from 'cors'
 import * as express from 'express'
 
@@ -15,10 +15,14 @@ const setupMiddleware = (app: express.Express) => {
 }
 
 const setupRoutes = (app: express.Express) => {
-    app.use('/auth', AuthRouter)
-    app.use('/births', authHandler, BirthRouter)
-    app.use('/users', authHandler, UserRouter)
-    app.get('/', (_req, res) => res.send(`Hello from ${process.env.SITE_NAME}! 👶`))
+    const v1 = express.Router()
+
+    v1.use('/auth', AuthRouter)
+    v1.use('/births', authHandler, BirthRouter)
+    v1.use('/users', authHandler, UserRouter)
+    v1.get('/', (_req, res) => res.send(`Hello from ${process.env.SITE_NAME}! 👶`))
+
+    app.use('/api/v1', v1)
 }
 
 const setupErrorHandling = (app: express.Express) => {

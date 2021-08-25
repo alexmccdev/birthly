@@ -1,4 +1,4 @@
-import * as BirthController from '@controllers/Birth.controller'
+import * as BirthController from '@controllers/v1/Birth.controller'
 import { Router } from 'express'
 
 const BirthRouter = Router()
