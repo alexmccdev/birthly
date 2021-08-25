@@ -38,7 +38,7 @@ const sendEmail = async (
 }
 
 export const sendEmailVericationEmail = async (to: string, emailToken: string) => {
-    const verificationLink = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/auth/verify/${emailToken}`
+    const verificationLink = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/auth/verify-email?token=${emailToken}`
     const mailInfo = await sendEmail(
         to,
         '"Verify Birthly Account" <noreply@birthly.com>',

@@ -90,9 +90,9 @@ export const token = async (req: Request, res: Response, next: NextFunction) => 
     }
 }
 
-export const verify = async (req: Request, res: Response, next: NextFunction) => {
+export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const emailToken = req.params.token
+        const emailToken = req.query.token as string
         const { id } = verifyEmailToken(emailToken)
 
         await prisma.user.update({ where: { id }, data: { verified: true } })
