@@ -5,11 +5,12 @@
     "main": "index.js",
     "scripts": {
         "dev:start": "ts-node-dev --watch .env.development -r dotenv/config --respawn src/index.ts dotenv_config_path=./.env.development",
-        "dev:generate": "dotenv -e .env.development -- npx prisma generate",
-        "dev:migrate": "dotenv -e .env.development -- npx prisma migrate dev",
+        "dev:generate": "dotenv -e .env.development -- npx prisma generate && npm run dev:copy-prisma-types",
+        "dev:migrate": "dotenv -e .env.development -- npx prisma migrate dev && npm run dev:copy-prisma-types",
         "dev:studio": "dotenv -e .env.development -- npx prisma studio",
         "dev:seed": "dotenv -e .env.development -- npx prisma db seed --preview-feature",
-        "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\""
+        "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
+        "dev:copy-prisma-types": "cd ./prisma/ && ts-node postTypeGeneration.ts"
     },
     "author": "Squidbody",
     "license": "ISC",

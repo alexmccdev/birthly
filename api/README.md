@@ -1,4 +1,4 @@
-# Birthly
+# Birthly API
 
 A digital birth log for OB/GYNs, midwives, doulas, or birth workers.
 
