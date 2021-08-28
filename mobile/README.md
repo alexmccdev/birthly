@@ -4,8 +4,6 @@ A digital birth log for OB/GYNs, midwives, doulas, or birth workers.
 
 ## Getting the project up and running
 
----
-
 1. `npm i -g expo-cli`
 2. `npm install` in /mobile folder.
 3. Run on phone:
