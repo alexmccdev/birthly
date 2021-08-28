@@ -2,8 +2,6 @@
 
 A digital birth log for OB/GYNs, midwives, doulas, or birth workers.
 
-## &nbsp;
-
 ## Getting the project up and running
 
 1. Make a .env.development file using .env.example as a template.
