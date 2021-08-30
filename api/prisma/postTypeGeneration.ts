@@ -2,7 +2,7 @@
 
 import * as fs from 'fs'
 
-const DESTINATION_FILE_PATHS = ['../../mobile/src/types/prisma/index.d.ts']
+const DESTINATION_FILE_PATHS = ['../../mobile/src/types/prisma.d.ts']
 
 const content = `// prettier-ignore\ndeclare module 'prisma' {\n${fs.readFileSync(
     '../node_modules/.prisma/client/index.d.ts',

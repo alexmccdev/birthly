@@ -3,10 +3,17 @@
     "compilerOptions": {
         "strict": true,
         "baseUrl": ".",
+
+        // Needs to match babel.config.js
         "paths": {
-            "@components/*": ["src/components/*"],
-            "@assets/*": ["src/assets/*"]
+            "@components/*": ["./src/components/*"],
+            "@contexts/*": ["./src/contexts/*"],
+            "@routes/*": ["./src/routes/*"],
+            "@screens/*": ["./src/screens/*"],
+            "@styles/*": ["./src/styles/*"],
+            "@utils/*": ["./src/utils/*"]
         },
         "typeRoots": ["./src/types", "./node_modules/@types"]
-    }
+    },
+    "exclude": ["node_modules", "babel.config.js", "metro.config.js"]
 }

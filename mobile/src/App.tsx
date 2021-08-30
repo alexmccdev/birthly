@@ -1,24 +1,22 @@
+import Main from '@components/Main'
+import { AuthProvider } from '@contexts/AuthContext'
 import { registerRootComponent } from 'expo'
-import { StatusBar } from 'expo-status-bar'
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import * as React from 'react'
+import 'react-native-gesture-handler'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
-const App = () => {
+interface IApp {}
+
+const queryClient = new QueryClient()
+
+const App: React.FC<IApp> = (props) => {
     return (
-        <View style={styles.container}>
-            <Text>Open up App.tsx to start working on your app!</Text>
-            <StatusBar style="auto" />
-        </View>
+        <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+                <Main />
+            </AuthProvider>
+        </QueryClientProvider>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
 
 export default registerRootComponent(App)

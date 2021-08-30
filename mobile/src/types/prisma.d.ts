@@ -5,7 +5,7 @@ declare module 'prisma' {
  * Client
 **/
 
-    import * as runtime from '@prisma/client/runtime';
+import * as runtime from '@prisma/client/runtime';
 declare const prisma: unique symbol
 export type PrismaPromise<A> = Promise<A> & {[prisma]: true}
 type UnwrapPromise<P extends any> = P extends Promise<infer R> ? R : P
