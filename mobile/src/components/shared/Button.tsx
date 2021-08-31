@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, Text, View, GestureResponderEvent } from 'react-native'
+import { GestureResponderEvent, Text, TouchableOpacity, View } from 'react-native'
+import tw from 'tailwind-react-native-classnames'
 
 interface IButton {
     onPress: (e: GestureResponderEvent) => void
@@ -9,27 +10,11 @@ interface IButton {
 const Button: React.FC<IButton> = (props) => {
     return (
         <TouchableOpacity onPress={props.onPress}>
-            <View style={styles.button}>
-                <Text style={styles.buttonText}>{props.text}</Text>
+            <View style={tw`rounded-md p-8 w-full bg-green-500`}>
+                <Text style={tw`text-white font-bold text-center uppercase`}>{props.text}</Text>
             </View>
         </TouchableOpacity>
     )
 }
-
-const styles = StyleSheet.create({
-    button: {
-        borderRadius: 8,
-        paddingVertical: 14,
-        paddingHorizontal: 10,
-        backgroundColor: '#f01d71',
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        fontSize: 16,
-        textAlign: 'center',
-    },
-})
 
 export default Button
