@@ -4,9 +4,9 @@ import React, { useContext } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 const AuthContext = React.createContext({
-    user: null,
+    user: { name: null, email: null },
     isLoading: false,
-    login: (credentials: { email: string; password: string }) => {},
+    login: (_credentials: { email: string; password: string }) => {},
     logout: () => {},
 })
 
@@ -14,7 +14,7 @@ const getUser = async () => {
     try {
         const { data } = await apiClient.get('/users')
 
-        return data
+        return data as { name: string; email: string }
     } catch {
         return null
     }

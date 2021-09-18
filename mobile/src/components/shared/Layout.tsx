@@ -1,9 +1,9 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { ScrollView } from 'react-native-gesture-handler'
 import tw from 'tailwind-react-native-classnames'
 
 const Layout: React.FC = (props) => {
-    return <SafeAreaView style={tw`flex flex-col flex-1 px-8`}>{props.children}</SafeAreaView>
+    return <ScrollView style={tw`flex-1 p-8`}>{props.children}</ScrollView>
 }
 
 export default Layout
