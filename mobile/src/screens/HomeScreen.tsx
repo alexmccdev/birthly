@@ -1,3 +1,4 @@
+import BirthCard from '@components/BirthCard'
 import Button from '@components/shared/Button'
 import Layout from '@components/shared/Layout'
 import Loading from '@components/shared/Loading'
@@ -27,7 +28,7 @@ const HomeScreen: React.FC<IHomeScreen> = () => {
             <Button text="Logout" onPress={() => logout()}></Button>
             <ScrollView>
                 {data.map((birth) => {
-                    return <Text>{birth.date}</Text>
+                    return <BirthCard birth={birth} key={birth.id} />
                 })}
             </ScrollView>
         </Layout>
