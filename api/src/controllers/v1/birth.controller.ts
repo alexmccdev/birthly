@@ -1,8 +1,7 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import { error } from '@utils/error.utils'
+import prisma from '@utils/prisma.utils'
 import { NextFunction, Request, Response } from 'express'
-
-const prisma = new PrismaClient()
 
 export const getBirths = async (req: Request, res: Response, next: NextFunction) => {
     try {

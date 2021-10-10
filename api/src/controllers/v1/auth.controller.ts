@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client'
 import { cache } from '@utils/cache.utils'
 import { sendEmailVericationEmail, sendForgotPasswordEmail } from '@utils/email.utils'
 import { error } from '@utils/error.utils'
@@ -11,10 +10,9 @@ import {
     verifyPasswordToken,
     verifyRefreshToken,
 } from '@utils/jwt.utils'
+import prisma from '@utils/prisma.utils'
 import * as bcrypt from 'bcrypt'
 import { NextFunction, Request, Response } from 'express'
-
-const prisma = new PrismaClient()
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {

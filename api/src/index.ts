@@ -29,25 +29,33 @@ const setupRoutes = (app: express.Express) => {
     v1.use('/users', authHandler, UserRouter)
     v1.get('/', (_req, res) => res.send(`Hello from ${process.env.SITE_NAME}! 👶`))
 
-    app.use('/api/v1', v1)
+    app.use(process.env.BASE_URL, v1)
 }
 
 const setupErrorHandling = (app: express.Express) => {
     app.use(errorHandler)
 }
 
-const startServer = async () => {
+const createServer = () => {
     const app = express()
 
     setupMiddleware(app)
     setupRoutes(app)
     setupErrorHandling(app)
 
+    return app
+}
+
+const startServer = () => {
+    const app = createServer()
+
     app.listen(process.env.SERVER_PORT, () =>
         console.log(
-            `Server ready at: ${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}/api/v1`
+            `Server ready at: ${process.env.SERVER_PROTOCOL}://${process.env.SERVER_IP}:${process.env.SERVER_PORT}${process.env.BASE_URL}`
         )
     )
 }
 
 startServer()
+
+export default createServer

@@ -10,6 +10,7 @@ declare namespace NodeJS {
 
             DATABASE_URL: string
 
+            BASE_URL: string
             CLIENT_URL: string
 
             EMAIL_HOST: string
@@ -27,6 +28,8 @@ declare namespace NodeJS {
 
             RATE_LIMIT_WINDOW_LENGTH: number
             RATE_LIMIT_MAX: number
+
+            ENABLE_LOGGING: 'true' | 'false'
         }
     }
 }

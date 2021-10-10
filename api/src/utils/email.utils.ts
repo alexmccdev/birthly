@@ -37,7 +37,7 @@ const sendEmail = async (
     })
 
     // log message text in dev
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && process.env.ENABLE_LOGGING === 'true') {
         console.log('Message sent: %s', mailInfo.messageId)
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(mailInfo))
     }
