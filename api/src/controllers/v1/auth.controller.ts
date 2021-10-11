@@ -82,12 +82,12 @@ export const token = async (req: Request, res: Response, next: NextFunction) => 
 
         if (!currentRefreshToken || currentRefreshToken !== refreshToken) {
             cache.del(id)
-            return next(new error.Unauthorized('/refreshToken'))
+            return next(new error.Unauthorized('/token'))
         }
 
         return res.json({ accessToken: generateAccessToken({ id }) })
     } catch {
-        return next(new error.Unauthorized('/refreshToken'))
+        return next(new error.Unauthorized('/token'))
     }
 }
 

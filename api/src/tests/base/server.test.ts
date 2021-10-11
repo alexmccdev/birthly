@@ -1,5 +1,5 @@
 import * as request from 'supertest'
-import createServer from '../index'
+import createServer from '../../index'
 
 const app = createServer()
 
